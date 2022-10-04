@@ -29,7 +29,12 @@ Bit & Byte
     ; 16bit = 2byte = 1word
     ; 32bit = 4byte = 2word = 1 dword (double-word)
     ; 64bit = 8byte = 4word = 1 qword (quad-word)
-    
+
+    ; rax = 64bits
+    ; eax = 32 bits
+    ; ax = 16bits
+    ; ah, al = 8bits
+
     ; mov reg1, cst : 오른쪽값 왼쪽에 대입
     ; mov reg1, reg2
     
