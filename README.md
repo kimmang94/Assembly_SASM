@@ -78,17 +78,59 @@ section .data
     ; [크기] resb(1) resw(2) resd(4) resq(8)
 section .bss
     e resb 10
-------------------------------------------------------------------------------------------------
-; 곱셈 / 나눗셈
-    ; 게임서버에서 ObjectID를 만들어 줄 때
+
+---------------------------------------------------------------------------------------------------------------
+더하기 연산
+add a, b (a = a + b)
+a는 레지스터 or 메모리
+b는 레지스터 or 메모리 or 상수
+- 단! a, b 모두 메모리는 x
+
+빼기연산
+sub a, b (a = a - b)
+---------------------------------------------------------------------------------------------------------------
+%include "io64.inc"
+
+section .text
+global CMAIN
+CMAIN:
+    mov rbp, rsp
     
-    ; 논리 연산
-    ; not and or xor
-    ; 조건A : 잘생겼다
-    ; 조건B : 키가 크다
+    ; 분기문 (if)
+    ; 특정 조건에 따라서 코드 흐름을 제어하는 것
+    ; ex) 스킬 버튼 눌렀는가? Yes -> 스킬 사용
+    ; ex) 제한 시간 내에 던전 입장 수락 버튼을 눌렀는가? YES -> 입장, NO -> 던전 취소
     
-    ; not A : 잘생겼다의 반대 -> (0이면 1, 1이면 0)
-    ; A and B : 잘생겼고 and 키도 크고 -> (둘다 1이면 1, 아니면 0)
-    ; A or B : 잘생겼거나 or 키가 크거나 -> (둘중 하나라도 1이면 1, 아니면 0)
-    ; A xor B :  둘다 1이거나 둘다 0 이면 0, 아니면 1 
+    ; 조건 -> 흐름
     
+    ; CMP dst, src (dst 가 기준)
+    ; 비교를 한 결과물은 Flag Register 저장
+    
+    ; JMP [label] 시리즈
+    ; JMP : 무조건 jump
+    ; JE : JumpEquals 같으면 Jump
+    ; JNE : JumpNotEquals 다르면 Jump
+    ; JG : GumpGreater 크면 Jump
+    ; JGE : JumpGreaterEquals 크거나 같으면 Jump
+    
+    
+    ; 두 숫자가 같으면 1, 다르면 0 출력
+    mov rax, 10
+    mov rbx, 20
+    
+    cmp rax, rbx
+    
+    je LABEL_EQUAL
+    
+    ;je 에 의해 점프를 안했다면, 같지않다는 의미
+    mov rcx, 0
+    jmp LABEL_EQUAL_END
+    
+LABEL_EQUAL:
+    mov rcx, 1
+LABEL_EQUAL_END:
+    PRINT_HEX 1, rcx
+    NEWLINE
+    
+    xor rax, rax
+    ret
